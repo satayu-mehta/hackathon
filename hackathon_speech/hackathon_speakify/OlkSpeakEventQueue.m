@@ -10,6 +10,7 @@
 static OlkSpeakEventQueue* sEventQueueInstance = nil;
 
 static int sExpectedMaxEventsPerType = 1024;
+static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 @implementation OlkSpeakEventQueue
 - (instancetype)init
 {
@@ -31,59 +32,83 @@ static int sExpectedMaxEventsPerType = 1024;
 		_events = [eventArray copy];
 		_eventsHead = 0;
 		_eventsTail = 0;
+		
+		_dispatchQueue = [[NSOperationQueue alloc] init];
+		[_dispatchQueue setMaxConcurrentOperationCount:1];
+		[_dispatchQueue setName:@"OlkSpeakEvent Operation Queue"];
+		//Prime the dispatch loop.
+		[_dispatchQueue addOperation:[[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(processEvents) object:nil] autorelease]];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	//Remove all subscribers.
-	[_observersByType release];
+	[_dispatchQueue release];
 	//Remove all events.
 	[_events release];
+	//Remove all subscribers.
+	[_observersByType release];
+	
 	[super dealloc];
-}
-
-- (BOOL)canAdvanceHead
-{
-	unsigned int newHead = (_eventsHead + 1) % sExpectedMaxEventsPerType;
-	return newHead != _eventsTail;
 }
 
 - (BOOL)canAdvanceTail
 {
-	return _eventsTail != _eventsHead;
+	unsigned int newTail = (_eventsTail + 1) % sExpectedMaxEventsPerType;
+	return newTail != _eventsHead;
+}
+
+- (BOOL)canAdvanceHead
+{
+	return _eventsHead != _eventsTail;
 }
 
 - (void)advanceHead
 {
 	AssertSz([self canAdvanceHead], "Trying to move queue head past tail");
+
+	//The head object isn't used anymore, so remove its data too.
+	OlkSpeakEvent* headEvent = [_events objectAtIndex:_eventsHead];
+	[headEvent setType:SpeakEvent_COUNT];
+	[headEvent setData:nil];
 	_eventsHead = (_eventsHead + 1) % sExpectedMaxEventsPerType;
 }
 
 - (void)advanceTail
 {
 	AssertSz([self canAdvanceTail], "Trying to move queue tail ahead of head");
-	//The tail object isn't used
 	_eventsTail = (_eventsTail + 1) % sExpectedMaxEventsPerType;
 }
 
-- (OlkSpeakEvent*)addEventOfType:(OlkSpeakEventType)type withDataOrNil:(NSObject*)data
+- (void)processEvents
 {
-	if(![self canAdvanceHead])
+	CFTimeInterval timeStart = CACurrentMediaTime();
+	CFTimeInterval timeMax = timeStart + sMaxProcessTimeSeconds;
+	for(int i = _eventsHead; i != _eventsTail; i = i + 1 % sExpectedMaxEventsPerType)
 	{
-		return nil;
+		OlkSpeakEvent* eventToPost = [_events objectAtIndex:i];
+		AssertSz([eventToPost type] != SpeakEvent_COUNT, "Trying to process invalid event");
+		//Then broadcast it. This can be an asynchronous event if needed.
+		NSArray* observerArray = [_observersByType objectAtIndex:[eventToPost type]];
+		for(NSObject<ISpeakEventObserver>* observer in observerArray)
+		{
+			[observer handleSpeakEvent:eventToPost];
+		}
+		
+		//Event is done broadcasting, update the head.
+		[self advanceHead];
 	}
 	
-	//Get the next free event.
-	OlkSpeakEvent* event = [_events objectAtIndex:_eventsHead];
-	[event setType:type];
-	[event setData:data];
-	
-	//Update the head only.
-	[self advanceHead];
-	
-	return event;
+	//If we finished early, sleep the processing thread.
+	CFTimeInterval remainingTime = timeMax - timeStart;
+	if(remainingTime > 0)
+	{
+		[NSThread sleepForTimeInterval:remainingTime];
+	}
+
+	//Schedule the next process event call.
+	[_dispatchQueue addOperation:[[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(processEvents) object:nil] autorelease]];
 }
 
 #pragma mark - Public Interface
@@ -118,19 +143,15 @@ static int sExpectedMaxEventsPerType = 1024;
 
 - (void)postEventOfType:(OlkSpeakEventType)type withDataOrNil:(NSObject*)data
 {
-	//Create the event...
-	OlkSpeakEvent* eventToPost = [self addEventOfType:type withDataOrNil:data];
-	
-	if(eventToPost != nil)
+	//Create and enqueue the event.
+	if([self canAdvanceTail])
 	{
-		//Then broadcast it. This can be an asynchronous event if needed.
-		NSArray* observerArray = [_observersByType objectAtIndex:type];
-		for(NSObject<ISpeakEventObserver>* observer in observerArray)
-		{
-			[observer handleSpeakEvent:eventToPost];
-		}
+		//Get the next free event.
+		OlkSpeakEvent* event = [_events objectAtIndex:_eventsTail];
+		[event setType:type];
+		[event setData:data];
 		
-		//Event is done broadcasting, update the tail.
+		//Update the tail only.
 		[self advanceTail];
 	}
 }

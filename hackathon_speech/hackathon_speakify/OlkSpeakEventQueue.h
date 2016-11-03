@@ -13,6 +13,7 @@
 {
 	NSArray* _observersByType;
 	NSArray* _events;
+	NSOperationQueue* _dispatchQueue;
 	//Index of the next free event slot.
 	unsigned int _eventsHead;
 	//Index of the last used event slot.
