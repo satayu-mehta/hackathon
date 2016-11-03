@@ -15,6 +15,6 @@
 
 + (OlkSpeechSynthesizer *)sharedInstance;
 
--(void) playMessage:(NSString *)message onCompletionCallback:completionBlock;
+-(void) playMessage:(NSString *)message onSynthesizerCallback:completionBlock;
 
 @end

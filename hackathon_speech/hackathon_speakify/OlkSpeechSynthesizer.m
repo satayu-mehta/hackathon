@@ -13,7 +13,7 @@ static OlkSpeechSynthesizer* sSharedInstance_ = nil;
 @interface OlkSpeechSynthesizer()
 {
 	NSSpeechSynthesizer *synthesizer;
-	onCompletionCallback callback;
+	onSynthesizerCallback callback;
 }
 
 @end
@@ -47,7 +47,7 @@ static OlkSpeechSynthesizer* sSharedInstance_ = nil;
 }
 
 
--(void) playMessage:(NSString *)message onCompletionCallback:completionBlock
+-(void) playMessage:(NSString *)message onSynthesizerCallback:completionBlock
 {
 	// release previous block.
 	if(callback)

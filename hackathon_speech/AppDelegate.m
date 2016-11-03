@@ -27,8 +27,23 @@
 	
 	// post notifications
 	[[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello world"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello satayu"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello john"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello vivek"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello maria"];
+    
+    [self performSelector:@selector(delayedEvents) withObject:self afterDelay:1.0];
+    
 }
 
+-(void) delayedEvents
+{
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello world"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello satayu"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello john"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello vivek"];
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello maria"];   
+}
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	// Insert code here to tear down your application

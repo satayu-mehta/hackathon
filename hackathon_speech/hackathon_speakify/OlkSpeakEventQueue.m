@@ -13,7 +13,6 @@
 static OlkSpeakEventQueue* sEventQueueInstance = nil;
 
 static int sExpectedMaxEventsPerType = 1024;
-static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 @implementation OlkSpeakEventQueue
 - (instancetype)init
 {
@@ -35,12 +34,12 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 		_events = [eventArray copy];
 		_eventsHead = 0;
 		_eventsTail = 0;
+        
+        processingEvent = NO;
 		
 		_dispatchQueue = [[NSOperationQueue alloc] init];
 		[_dispatchQueue setMaxConcurrentOperationCount:1];
-		[_dispatchQueue setName:@"OlkSpeakEvent Operation Queue"];
-		//Prime the dispatch loop.
-		[_dispatchQueue addOperation:[[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(processEvents) object:nil] autorelease]];
+		[_dispatchQueue setName:@"OlkSpeakEvent Operation Queue"];        
 	}
 	return self;
 }
@@ -86,32 +85,19 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 
 - (void)processEvents
 {
-	CFTimeInterval timeStart = CACurrentMediaTime();
-	CFTimeInterval timeMax = timeStart + sMaxProcessTimeSeconds;
-	for(int i = _eventsHead; i != _eventsTail; i = i + 1 % sExpectedMaxEventsPerType)
-	{
-		OlkSpeakEvent* eventToPost = [_events objectAtIndex:i];
-		AssertSz([eventToPost type] != SpeakEvent_COUNT, @"Trying to process invalid event");
-		//Then broadcast it. This can be an asynchronous event if needed.
-		NSArray* observerArray = [_observersByType objectAtIndex:[eventToPost type]];
-		for(NSObject<ISpeakEventObserver>* observer in observerArray)
-		{
-			[observer handleSpeakEvent:eventToPost];
-		}
-		
-		//Event is done broadcasting, update the head.
-		[self advanceHead];
-	}
-	
-	//If we finished early, sleep the processing thread.
-	CFTimeInterval remainingTime = timeMax - timeStart;
-	if(remainingTime > 0)
-	{
-		[NSThread sleepForTimeInterval:remainingTime];
-	}
-
-	//Schedule the next process event call.
-	[_dispatchQueue addOperation:[[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(processEvents) object:nil] autorelease]];
+    if(!processingEvent)// && _eventsHead != _eventsTail)
+    {
+        OlkSpeakEvent* eventToPost = [_events objectAtIndex:_eventsHead];
+        AssertSz([eventToPost type] != SpeakEvent_COUNT, @"Trying to process invalid event");
+        //Then broadcast it. This can be an asynchronous event if needed.
+        NSArray* observerArray = [_observersByType objectAtIndex:[eventToPost type]];
+        for(NSObject<ISpeakEventObserver>* observer in observerArray)
+        {
+            [observer handleSpeakEvent:eventToPost];
+        }
+        
+        processingEvent = YES;
+    }
 }
 
 #pragma mark - Public Interface
@@ -156,11 +142,23 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 		
 		//Update the tail only.
 		[self advanceTail];
+        
+        //Schedule the next process event call.
+        [_dispatchQueue addOperation:[[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(processEvents) object:nil] autorelease]];
 	}
 }
 
 - (void)postEventOfType:(OlkSpeakEventType)type
 {
-	[self postEventOfType:type withDataOrNil:nil];
+    // event is completed. Update head and prcess next
+	if(type == SpeakEvent_OperationCompleted)
+    {
+        [self advanceHead];
+        
+        processingEvent = NO;
+        
+        //Schedule the next process event call.
+        [_dispatchQueue addOperation:[[[NSInvocationOperation alloc] initWithTarget:self selector:@selector(processEvents) object:nil] autorelease]];
+    }
 }
 @end

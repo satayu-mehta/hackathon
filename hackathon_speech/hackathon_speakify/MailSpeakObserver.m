@@ -8,7 +8,9 @@
 
 #import "MailSpeakObserver.h"
 #import "OlkSpeechSynthesizer.h"
+#import "OlkSpeechRecognizer.h"
 #import "OlkSpeakEvent.h"
+#import "OlkSpeakEventQueue.h"
 
 static MailSpeakObserver* sSharedInstance_ = nil;
 
@@ -19,6 +21,7 @@ static MailSpeakObserver* sSharedInstance_ = nil;
 }
 
 @property (readonly) OlkSpeechSynthesizer *synthesizer;
+@property (readonly) OlkSpeechRecognizer *recognizer;
 @property (readwrite, retain) OlkSpeakEvent *speakEvent;
 
 @end
@@ -27,6 +30,7 @@ static MailSpeakObserver* sSharedInstance_ = nil;
 @implementation MailSpeakObserver
 
 @synthesize synthesizer = synthesizer_;
+@synthesize recognizer = recognizer_;
 @synthesize speakEvent = speakEvent_;
 
 - (instancetype)init
@@ -36,6 +40,7 @@ static MailSpeakObserver* sSharedInstance_ = nil;
 	if(self)
 	{
 		synthesizer_ = [OlkSpeechSynthesizer sharedInstance];
+        recognizer_ = [OlkSpeechRecognizer sharedInstance];
 	}
 	
 	return self;
@@ -62,17 +67,45 @@ static MailSpeakObserver* sSharedInstance_ = nil;
 	
 	if([speakEvent type] == SpeakEvent_NewMessage)
 	{
-		[[self synthesizer] playMessage:(NSString*)[speakEvent data] onCompletionCallback:^(void){
-			
-			[self userSelection];
-			
+        // play the welcome message
+		[[self synthesizer] playMessage:(NSString*)@"New Message. Do you want to read the message. Yes or No ?" onSynthesizerCallback:^(void){
+
+            [self captureUserInput];
+            
 		}];
 	}
 }
 
--(void) userSelection
+-(void) captureUserInput
 {
-	
+    // wait for user input.
+    [[self recognizer] listenToCommands:@[@"yes", @"no"] onRecognizerCallback:^(NSString *aCmd){
+        
+        [self handleUserInput:aCmd];
+    }];
+ 
+}
+
+-(void) handleUserInput:(NSString *)aCmd
+{
+    if([aCmd isEqualToString:@"yes"])
+    {
+        [[self synthesizer] playMessage:(NSString*)[[self speakEvent] data] onSynthesizerCallback:^(void){
+            
+            [self completedOperation];
+            
+        }];
+    }
+    else if([aCmd isEqualToString:@"no"])
+    {
+        [self completedOperation];
+    }
+}
+
+
+-(void) completedOperation
+{
+    [[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_OperationCompleted];
 }
 
 @end

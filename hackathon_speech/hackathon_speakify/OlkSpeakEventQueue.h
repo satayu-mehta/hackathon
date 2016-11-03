@@ -18,6 +18,8 @@
 	unsigned int _eventsHead;
 	//Index of the last used event slot.
 	unsigned int _eventsTail;
+    
+    BOOL processingEvent;
 }
 
 + (OlkSpeakEventQueue*)getInstance;
