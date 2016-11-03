@@ -8,6 +8,10 @@
 
 #import "AppDelegate.h"
 
+#import "MailSpeakObserver.h"
+#import "OlkSpeakEvent.h"
+#import "OlkSpeakEventQueue.h"
+
 @interface AppDelegate ()
 
 @property IBOutlet NSWindow *window;
@@ -17,6 +21,12 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application
+	
+	// register observers
+	[[OlkSpeakEventQueue getInstance] addObserver:[MailSpeakObserver sharedInstance] forType:SpeakEvent_NewMessage];
+	
+	// post notifications
+	[[OlkSpeakEventQueue getInstance] postEventOfType:SpeakEvent_NewMessage withDataOrNil:@"hello world"];
 }
 
 

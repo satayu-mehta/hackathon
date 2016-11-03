@@ -10,4 +10,6 @@
 
 @interface MailSpeakObserver : NSObject <ISpeakEventObserver>
 
++ (MailSpeakObserver *)sharedInstance;
+
 @end

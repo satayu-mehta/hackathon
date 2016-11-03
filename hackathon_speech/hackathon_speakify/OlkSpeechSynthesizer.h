@@ -6,14 +6,15 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-#import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 #import "ISpeakEventObserver.h"
 #import "OlkSpeakEvent.h"
 
-@class ECRecordUID;
-@interface OlkSpeechSynthesizer : NSSpeechSynthesizer
+
+@interface OlkSpeechSynthesizer : NSObject <NSSpeechSynthesizerDelegate>
 
 + (OlkSpeechSynthesizer *)sharedInstance;
+
+-(void) playMessage:(NSString *)message onCompletionCallback:completionBlock;
 
 @end

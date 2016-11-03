@@ -10,9 +10,13 @@
 typedef enum OlkSpeakEventType {
 	SpeakEvent_EnableSystem,
 	SpeakEvent_DisableSystem,
-		SpeakEvent_NewMessage,
+	SpeakEvent_NewMessage,
 	SpeakEvent_COUNT
 } OlkSpeakEventType;
+
+// Define a new type for the block
+typedef void (^onCompletionCallback)(void);
+
 
 @interface OlkSpeakEvent : NSObject
 @property (nonatomic, assign) OlkSpeakEventType type;
