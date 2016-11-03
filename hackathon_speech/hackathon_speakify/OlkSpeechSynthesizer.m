@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OlkSpeechSynthesizer.h"
+#import "OlkSpeakMacros.h"
 
 static OlkSpeechSynthesizer* sSharedInstance_ = nil;
 

@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "ISpeakEventObserver.h"
 #import "OlkSpeakEvent.h"
-#import "ECRecordUID.h"
 
+@class ECRecordUID;
 @interface OlkSpeechSynthesizer : NSSpeechSynthesizer
 
 + (OlkSpeechSynthesizer *)sharedInstance;

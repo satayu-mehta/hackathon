@@ -7,6 +7,9 @@
 
 #import "OlkSpeakEventQueue.h"
 
+#import <Cocoa/Cocoa.h>
+#import "OlkSpeakMacros.h"
+
 static OlkSpeakEventQueue* sEventQueueInstance = nil;
 
 static int sExpectedMaxEventsPerType = 1024;
@@ -66,7 +69,7 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 
 - (void)advanceHead
 {
-	AssertSz([self canAdvanceHead], "Trying to move queue head past tail");
+    AssertSz([self canAdvanceHead], @"Trying to move queue head past tail");
 
 	//The head object isn't used anymore, so remove its data too.
 	OlkSpeakEvent* headEvent = [_events objectAtIndex:_eventsHead];
@@ -77,7 +80,7 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 
 - (void)advanceTail
 {
-	AssertSz([self canAdvanceTail], "Trying to move queue tail ahead of head");
+	AssertSz([self canAdvanceTail], @"Trying to move queue tail ahead of head");
 	_eventsTail = (_eventsTail + 1) % sExpectedMaxEventsPerType;
 }
 
@@ -88,7 +91,7 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 	for(int i = _eventsHead; i != _eventsTail; i = i + 1 % sExpectedMaxEventsPerType)
 	{
 		OlkSpeakEvent* eventToPost = [_events objectAtIndex:i];
-		AssertSz([eventToPost type] != SpeakEvent_COUNT, "Trying to process invalid event");
+		AssertSz([eventToPost type] != SpeakEvent_COUNT, @"Trying to process invalid event");
 		//Then broadcast it. This can be an asynchronous event if needed.
 		NSArray* observerArray = [_observersByType objectAtIndex:[eventToPost type]];
 		for(NSObject<ISpeakEventObserver>* observer in observerArray)
