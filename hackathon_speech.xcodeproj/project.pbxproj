@@ -7,14 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		760303481DCAC3010013F71F /* MailSpeakObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 760303411DCAC3000013F71F /* MailSpeakObserver.m */; };
+		760303491DCAC3010013F71F /* OlkSpeakEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 760303431DCAC3000013F71F /* OlkSpeakEvent.m */; };
+		7603034A1DCAC3010013F71F /* OlkSpeakEventQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 760303451DCAC3000013F71F /* OlkSpeakEventQueue.m */; };
+		7603034B1DCAC3010013F71F /* OlkSpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 760303471DCAC3000013F71F /* OlkSpeechSynthesizer.m */; };
 		766AB5FD1DCAB0EC00F4442C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 766AB5FC1DCAB0EC00F4442C /* AppDelegate.m */; };
 		766AB6001DCAB0EC00F4442C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 766AB5FF1DCAB0EC00F4442C /* main.m */; };
 		766AB6021DCAB0EC00F4442C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 766AB6011DCAB0EC00F4442C /* Assets.xcassets */; };
 		766AB6051DCAB0EC00F4442C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766AB6031DCAB0EC00F4442C /* MainMenu.xib */; };
-		F72A04CD1DCAB52E0032DD90 /* hackathon_speakify in Resources */ = {isa = PBXBuildFile; fileRef = F72A04CC1DCAB52E0032DD90 /* hackathon_speakify */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7603033F1DCAC3000013F71F /* ISpeakEventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISpeakEventObserver.h; path = hackathon_speakify/ISpeakEventObserver.h; sourceTree = "<group>"; };
+		760303401DCAC3000013F71F /* MailSpeakObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailSpeakObserver.h; path = hackathon_speakify/MailSpeakObserver.h; sourceTree = "<group>"; };
+		760303411DCAC3000013F71F /* MailSpeakObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailSpeakObserver.m; path = hackathon_speakify/MailSpeakObserver.m; sourceTree = "<group>"; };
+		760303421DCAC3000013F71F /* OlkSpeakEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OlkSpeakEvent.h; path = hackathon_speakify/OlkSpeakEvent.h; sourceTree = "<group>"; };
+		760303431DCAC3000013F71F /* OlkSpeakEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OlkSpeakEvent.m; path = hackathon_speakify/OlkSpeakEvent.m; sourceTree = "<group>"; };
+		760303441DCAC3000013F71F /* OlkSpeakEventQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OlkSpeakEventQueue.h; path = hackathon_speakify/OlkSpeakEventQueue.h; sourceTree = "<group>"; };
+		760303451DCAC3000013F71F /* OlkSpeakEventQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OlkSpeakEventQueue.m; path = hackathon_speakify/OlkSpeakEventQueue.m; sourceTree = "<group>"; };
+		760303461DCAC3000013F71F /* OlkSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OlkSpeechSynthesizer.h; path = hackathon_speakify/OlkSpeechSynthesizer.h; sourceTree = "<group>"; };
+		760303471DCAC3000013F71F /* OlkSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OlkSpeechSynthesizer.m; path = hackathon_speakify/OlkSpeechSynthesizer.m; sourceTree = "<group>"; };
 		766AB5F81DCAB0EC00F4442C /* hackathon_speech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hackathon_speech.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		766AB5FB1DCAB0EC00F4442C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		766AB5FC1DCAB0EC00F4442C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -22,7 +34,6 @@
 		766AB6011DCAB0EC00F4442C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		766AB6041DCAB0EC00F4442C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		766AB6061DCAB0EC00F4442C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F72A04CC1DCAB52E0032DD90 /* hackathon_speakify */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hackathon_speakify; path = hackathon_speech/hackathon_speakify; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,10 +47,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7603034C1DCAC3050013F71F /* hackathon_speakify */ = {
+			isa = PBXGroup;
+			children = (
+				7603033F1DCAC3000013F71F /* ISpeakEventObserver.h */,
+				760303401DCAC3000013F71F /* MailSpeakObserver.h */,
+				760303411DCAC3000013F71F /* MailSpeakObserver.m */,
+				760303421DCAC3000013F71F /* OlkSpeakEvent.h */,
+				760303431DCAC3000013F71F /* OlkSpeakEvent.m */,
+				760303441DCAC3000013F71F /* OlkSpeakEventQueue.h */,
+				760303451DCAC3000013F71F /* OlkSpeakEventQueue.m */,
+				760303461DCAC3000013F71F /* OlkSpeechSynthesizer.h */,
+				760303471DCAC3000013F71F /* OlkSpeechSynthesizer.m */,
+			);
+			name = hackathon_speakify;
+			sourceTree = "<group>";
+		};
 		766AB5EF1DCAB0EC00F4442C = {
 			isa = PBXGroup;
 			children = (
-				F72A04CC1DCAB52E0032DD90 /* hackathon_speakify */,
 				766AB5FA1DCAB0EC00F4442C /* hackathon_speech */,
 				766AB5F91DCAB0EC00F4442C /* Products */,
 			);
@@ -56,6 +82,7 @@
 		766AB5FA1DCAB0EC00F4442C /* hackathon_speech */ = {
 			isa = PBXGroup;
 			children = (
+				7603034C1DCAC3050013F71F /* hackathon_speakify */,
 				766AB5FB1DCAB0EC00F4442C /* AppDelegate.h */,
 				766AB5FC1DCAB0EC00F4442C /* AppDelegate.m */,
 				766AB6011DCAB0EC00F4442C /* Assets.xcassets */,
@@ -132,7 +159,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F72A04CD1DCAB52E0032DD90 /* hackathon_speakify in Resources */,
 				766AB6021DCAB0EC00F4442C /* Assets.xcassets in Resources */,
 				766AB6051DCAB0EC00F4442C /* MainMenu.xib in Resources */,
 			);
@@ -147,6 +173,10 @@
 			files = (
 				766AB6001DCAB0EC00F4442C /* main.m in Sources */,
 				766AB5FD1DCAB0EC00F4442C /* AppDelegate.m in Sources */,
+				7603034A1DCAC3010013F71F /* OlkSpeakEventQueue.m in Sources */,
+				7603034B1DCAC3010013F71F /* OlkSpeechSynthesizer.m in Sources */,
+				760303491DCAC3010013F71F /* OlkSpeakEvent.m in Sources */,
+				760303481DCAC3010013F71F /* MailSpeakObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,7 +202,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -219,7 +249,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
