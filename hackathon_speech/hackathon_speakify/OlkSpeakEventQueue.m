@@ -69,7 +69,11 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 
 - (void)advanceHead
 {
+<<<<<<< HEAD
     AssertSz([self canAdvanceHead], @"Trying to move queue head past tail");
+=======
+	///AssertSz([self canAdvanceHead], "Trying to move queue head past tail");
+>>>>>>> 9e77e7f0d77e0cd1a6b74fd27e4caa480866bb4e
 
 	//The head object isn't used anymore, so remove its data too.
 	OlkSpeakEvent* headEvent = [_events objectAtIndex:_eventsHead];
@@ -80,7 +84,11 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 
 - (void)advanceTail
 {
+<<<<<<< HEAD
 	AssertSz([self canAdvanceTail], @"Trying to move queue tail ahead of head");
+=======
+	//AssertSz([self canAdvanceTail], "Trying to move queue tail ahead of head");
+>>>>>>> 9e77e7f0d77e0cd1a6b74fd27e4caa480866bb4e
 	_eventsTail = (_eventsTail + 1) % sExpectedMaxEventsPerType;
 }
 
@@ -91,7 +99,11 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 	for(int i = _eventsHead; i != _eventsTail; i = i + 1 % sExpectedMaxEventsPerType)
 	{
 		OlkSpeakEvent* eventToPost = [_events objectAtIndex:i];
+<<<<<<< HEAD
 		AssertSz([eventToPost type] != SpeakEvent_COUNT, @"Trying to process invalid event");
+=======
+		//AssertSz([eventToPost type] != SpeakEvent_COUNT, "Trying to process invalid event");
+>>>>>>> 9e77e7f0d77e0cd1a6b74fd27e4caa480866bb4e
 		//Then broadcast it. This can be an asynchronous event if needed.
 		NSArray* observerArray = [_observersByType objectAtIndex:[eventToPost type]];
 		for(NSObject<ISpeakEventObserver>* observer in observerArray)
@@ -121,7 +133,7 @@ static CFTimeInterval sMaxProcessTimeSeconds = 0.100;
 	{
 		sEventQueueInstance = [[OlkSpeakEventQueue alloc] init];
 	}
-	AssertSz(sEventQueueInstance != nil, @"Couldn't initialize event queue instance!");
+	//AssertSz(sEventQueueInstance != nil, @"Couldn't initialize event queue instance!");
 	return sEventQueueInstance;
 }
 

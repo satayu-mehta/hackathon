@@ -34,15 +34,4 @@ static OlkSpeechSynthesizer* sSharedInstance_ = nil;
 	return sSharedInstance_;
 }
 
-- (BOOL)playNewMessageNotification:(NSString *) ATTRIBUTE_UNUSED sender
-{
-	//To be implemented
-	return NO;
-	
-}
-
-- (void)readNewMessage:(ECRecordUID *) ATTRIBUTE_UNUSED inRecordUID
-{
-	//To be implemented
-}
 @end

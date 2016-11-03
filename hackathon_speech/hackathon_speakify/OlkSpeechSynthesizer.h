@@ -16,7 +16,4 @@
 
 + (OlkSpeechSynthesizer *)sharedInstance;
 
-- (BOOL)playNewMessageNotification:(NSString *) sender;
-- (void)readNewMessage:(ECRecordUID *) inRecordUID;
-
 @end
