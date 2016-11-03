@@ -11,6 +11,7 @@
 		766AB6001DCAB0EC00F4442C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 766AB5FF1DCAB0EC00F4442C /* main.m */; };
 		766AB6021DCAB0EC00F4442C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 766AB6011DCAB0EC00F4442C /* Assets.xcassets */; };
 		766AB6051DCAB0EC00F4442C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766AB6031DCAB0EC00F4442C /* MainMenu.xib */; };
+		F72A04CD1DCAB52E0032DD90 /* hackathon_speakify in Resources */ = {isa = PBXBuildFile; fileRef = F72A04CC1DCAB52E0032DD90 /* hackathon_speakify */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		766AB6011DCAB0EC00F4442C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		766AB6041DCAB0EC00F4442C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		766AB6061DCAB0EC00F4442C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F72A04CC1DCAB52E0032DD90 /* hackathon_speakify */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hackathon_speakify; path = hackathon_speech/hackathon_speakify; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +39,7 @@
 		766AB5EF1DCAB0EC00F4442C = {
 			isa = PBXGroup;
 			children = (
+				F72A04CC1DCAB52E0032DD90 /* hackathon_speakify */,
 				766AB5FA1DCAB0EC00F4442C /* hackathon_speech */,
 				766AB5F91DCAB0EC00F4442C /* Products */,
 			);
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72A04CD1DCAB52E0032DD90 /* hackathon_speakify in Resources */,
 				766AB6021DCAB0EC00F4442C /* Assets.xcassets in Resources */,
 				766AB6051DCAB0EC00F4442C /* MainMenu.xib in Resources */,
 			);
@@ -290,6 +294,7 @@
 				766AB60B1DCAB0EC00F4442C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
